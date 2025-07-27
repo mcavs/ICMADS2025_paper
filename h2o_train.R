@@ -1,3 +1,6 @@
+install.packages("h2o")
+library(h2o)
+
 h2o_train <- function(data, 
                       max_models       = 80, 
                       max_runtime_secs = 2880, 
