@@ -17,7 +17,7 @@ colnames(swiss_roll) <- c("x", "y", "z")
 # --------------------------------------------------------------------
 # 2. Intrinsic Dimensionality (Gerçek manifold boyutu)
 # --------------------------------------------------------------------
-id_result <- est.dims(swiss_roll, method = "MLE")
+id_result <- est.dims(AER_credit_card_data, method = "MLE")
 cat("Intrinsic Dimensionality Tahmini:", id_result$estdim, "\n")
 # Yorum: Gerçek boyut, gözlenen boyuttan (3D) daha düşükse manifold varsayımı makul olabilir.
 
@@ -25,7 +25,7 @@ cat("Intrinsic Dimensionality Tahmini:", id_result$estdim, "\n")
 # 3. Curvature (Yerel eğrilik analizi)
 # --------------------------------------------------------------------
 # Mesafeleri hesapla
-dmat <- dist(swiss_roll)
+dmat <- dist(AER_credit_card_data)
 curvature_result <- curvature2D(as.matrix(swiss_roll[, c(1,3)]))  # 2D projeksiyon üzerinden eğrilik
 summary(curvature_result$kappa)
 # Yorum: Pozitif/negatif eğrilik değerleri, manifold üzerindeki bükülmeleri tanımlar. Yüksek mutlak değerli eğrilikler yerel yapısal değişiklikleri gösterir.
