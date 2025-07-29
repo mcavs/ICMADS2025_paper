@@ -1,7 +1,7 @@
 library(ggplot2)
 library(dplyr)
 
-viable_range_plot <- function(data, baseline){
+viable_range_plot <- function(data, data_name){
   # Calculate the difference between the highest and lowest value for each row
   row_diffs <- apply(data, 1, function(x) max(x) - min(x))
   
@@ -12,7 +12,8 @@ viable_range_plot <- function(data, baseline){
   df_plot <- data.frame(
     Original_ID    = 1:length(row_diffs),       # Original observation ID
     Difference     = row_diffs,                 # Difference value for each row
-    Baseline_value = data[,baseline] - row_mins # Newly calculated baseline value
+    Baseline_value = data[, 1] - row_mins, # Newly calculated baseline value
+    name           = rep(data_name, length(row_mins))
   )
   
   # Sort the data frame by height (Difference column)
@@ -37,31 +38,109 @@ viable_range_plot <- function(data, baseline){
       x = "Percentile Rank of Observations", 
       y = expression(abs(V[epsilon](x[i]))) 
     ) +
-    theme_bw() +
+    theme_bw(base_size = 16) +
     theme(
-      plot.title = element_text(hjust = 0.5)
+      strip.text = element_text(
+        family   = "Courier")
     ) +
     # Set breaks and labels for the Y-axis
     scale_y_continuous(
-      breaks = c(0, 0.25, 0.50, 0.75, 1.00), # Values to be marked on the Y-axis
-      labels = c("0%", "25%", "50%", "75%", "100%"), # Labels corresponding to these values
-      limits = c(0, 1) # Force Y-axis limits between 0 and 1
+      breaks = c(0.25, 0.50, 0.75, 1.00), # Values to be marked on the Y-axis
+      labels = c("0.25", "0.50", "0.75", "1"), # Labels corresponding to these values
+      limits = c(0, 1),
+      expand = expansion(mult = c(0, 0))
     ) +
     # Set breaks and labels for the X-axis
     scale_x_continuous(
-      breaks = c(0, 0.25, 0.50, 0.75, 1.00), # Values to be marked on the X-axis
-      labels = c("0%", "25%", "50%", "75%", "100%"), # Labels corresponding to these values
-      expand = expansion(mult = c(0, 0)) # Ensure bars start and end exactly at the axis limits
-    )
+      breaks = c(0.25, 0.50, 0.75, 1.00), # Values to be marked on the X-axis
+      labels = c("25%", "50%", "75%", "100%"), # Labels corresponding to these values
+      limits = c(0, 1),
+      expand = expansion(mult = c(0, 0)) 
+    ) + 
+    facet_grid(~ name)
   return(plot)
 }
 
-viable_range_plot(AER, 1)
-viable_range_plot(bank, 1)
-viable_range_plot(german, 1)
-viable_range_plot(give, 1)
-viable_range_plot(hmeq, 1)
-viable_range_plot(loan, 1)
-viable_range_plot(poland3, 1)
-viable_range_plot(poland5, 1)
-viable_range_plot(taiwan, 1)
+plot_aer  <- viable_range_plot(data = AER, data_name = "CreditCard")
+plot_aer  <- plot_aer + labs(x = NULL)  +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_text(size = 14)
+  )
+
+plot_bank <- viable_range_plot(bank, data_name = "Bank_marketing")
+plot_bank <- plot_bank + labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank()
+  )
+
+plot_germ <- viable_range_plot(german, data_name = "German_credit")
+plot_germ <- plot_germ + labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank()
+  ) 
+
+plot_give <- viable_range_plot(give, data_name = "Give_me_credit")
+plot_give <- plot_give + labs(x = NULL)  +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_text(size = 14)
+  ) 
+
+plot_hmeq <- viable_range_plot(hmeq, data_name = "HMEQ")
+plot_hmeq <- plot_hmeq + labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank()
+  ) 
+
+plot_loan <- viable_range_plot(loan, data_name = "Loan_data")
+plot_loan <- plot_loan + labs(x = NULL, y = NULL) +
+  theme(
+    axis.text.x  = element_blank(),   
+    axis.ticks.x = element_blank(),
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank()
+  ) 
+
+plot_pol3 <- viable_range_plot(poland3, data_name = "Poland_year3")
+plot_pol3  <- plot_pol3 +
+  theme(
+    axis.text.x  = element_text(size = 14),   
+    axis.text.y  = element_text(size = 14)   
+  ) 
+
+plot_pol5 <- viable_range_plot(poland5, data_name = "Poland_year5")
+plot_pol5 <- plot_pol5 + labs(y = NULL) +
+  theme(
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank(),
+    axis.text.x  = element_text(size = 14)
+  )
+
+plot_taiw <- viable_range_plot(taiwan, data_name = "Taiwan_credit")
+plot_taiw <- plot_taiw + labs(y = NULL) +
+  theme(
+    axis.text.y  = element_blank(),   
+    axis.ticks.y = element_blank(),
+    axis.text.x  = element_text(size = 14)
+  )
+
+library(patchwork)
+
+(plot_aer | plot_bank | plot_germ) /
+  (plot_give | plot_hmeq | plot_loan) / 
+  (plot_pol3 | plot_pol5 | plot_taiw) 
+
+
+
