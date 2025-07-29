@@ -28,10 +28,10 @@ viable_range_plot <- function(data, baseline){
     geom_col(fill  = "grey", 
              color = NA, 
              width = 1 / nrow(df_plot_sorted)) +       # Adjust bar width
-    geom_point(aes(y = Baseline_value), 
-               color = "red", 
-               size  = 0.5, 
-               alpha = 0.6) + # Points
+    #geom_point(aes(y = Baseline_value), 
+    #           color = "red", 
+    #           size  = 0.5, 
+    #           alpha = 0.6) + # Points
     labs(
       title = "",
       x = "Percentile Rank of Observations", 
@@ -56,7 +56,12 @@ viable_range_plot <- function(data, baseline){
   return(plot)
 }
 
-data <- cbind(runif(100), runif(100), runif(100), runif(100), runif(100),
-              runif(100), runif(100), runif(100), runif(100), runif(100))
-
-viable_range_plot(data, 1)
+viable_range_plot(AER, 1)
+viable_range_plot(bank, 1)
+viable_range_plot(german, 1)
+viable_range_plot(give, 1)
+viable_range_plot(hmeq, 1)
+viable_range_plot(loan, 1)
+viable_range_plot(poland3, 1)
+viable_range_plot(poland5, 1)
+viable_range_plot(taiwan, 1)
