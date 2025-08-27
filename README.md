@@ -1,6 +1,6 @@
 ## Overview
 
-This repository contains the code and datasets for the ICMADS 2025 research project. It includes data preprocessing, model training, prediction storage, metric calculation, and visualization scripts. All code is written in R.
+This repository contains the code and datasets for the ICMADS 2025 paper, "An Investigation of Predictive Multiplicity in Model Selection for Credit Risk Estimation." It includes data preprocessing, model training, prediction storage, metric calculation, and visualization scripts. All code is written in R.
 
 ## Repository Structure
 ```
