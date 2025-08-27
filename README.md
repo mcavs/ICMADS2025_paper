@@ -3,7 +3,7 @@
 This repository contains the code and datasets for the ICMADS 2025 research project. It includes data preprocessing, model training, prediction storage, metric calculation, and visualization scripts. All code is written in R.
 
 ## Repository Structure
-
+```
 ICMADS2025_paper/
 │
 ├── datasets/ # Raw and processed datasets
@@ -20,6 +20,7 @@ ICMADS2025_paper/
 ├── runAll.R # Master script to run the full pipeline
 │
 └── README.md # This documentation
+```
 
 ## Scripts Description
 
@@ -52,7 +53,7 @@ Install dependencies with:
 ```
 install.packages(c("h2o", "ggplot2", "dplyr", "readr", "purrr", "tidyr"))
 ```
-Ensure you have the H2O package installed and properly configured.
+Please make sure you have the H2O package installed and properly configured.
 
 ## Usage Instructions
 
